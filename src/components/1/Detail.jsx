@@ -87,9 +87,7 @@ class Detail extends Component {
           isLoad: false
         })
 
-        /*let content = ReactDOM.findDOMNode(self.refs.conten)
-
-        console.log(content)*/
+        //self.refs['content'].scrollTop = 200
       }
     })
   }
