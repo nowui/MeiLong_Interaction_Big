@@ -20,7 +20,8 @@
     "redux": "^3.5.2",
     "draft-js": "^0.7.0",
     "reqwest": "^2.0.5",
-    "socket.io-client": "^1.4.8"
+    "socket.io-client": "^1.4.8",
+    "react-html5video": "^1.2.12"
   },
   "devDependencies": {
     "atool-test-mocha": "^0.1.4",
