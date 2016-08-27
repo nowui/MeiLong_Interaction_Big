@@ -1,11 +1,15 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router'
 import { Spin } from 'antd'
+import Swiper from 'swiper'
 import Helper from '../../common/Helper'
-import styles from './index.less'
+import 'swiper/dist/css/swiper.min.css'
+import styles from './Index.less'
+import './Index.css'
 
 let self
 let object
+let swiper
 
 class Index extends Component {
 
@@ -29,7 +33,20 @@ class Index extends Component {
         object: object,
         zttplist: object.zttplist
       })
+
+      setTimeout(function() {
+        swiper = new Swiper('.swiper-container', {
+          slidesPerView: 8,
+          autoplay: 1000,
+          autoplayDisableOnInteraction: false,
+          loop: true
+        })
+      }, 10)
     }
+  }
+
+  componentWillUnmount() {
+    swiper.destroy()
   }
 
   load = function() {
@@ -48,6 +65,13 @@ class Index extends Component {
         self.setState({
           object: data,
           zttplist: data.zttplist
+        })
+
+        swiper = new Swiper('.swiper-container', {
+          slidesPerView: 8,
+          autoplay: 1000,
+          autoplayDisableOnInteraction: false,
+          loop: true
         })
       },
       complete: function() {
@@ -68,16 +92,19 @@ class Index extends Component {
           </div>
           <div className={styles.description} dangerouslySetInnerHTML={{__html: this.state.object.description}}></div>
           <div className={styles.zttplist}>
-          {
-            this.state.zttplist.map(function (item, index) {
-              return (
-                index  < 9 ?
-                <img key={item.id} src={Helper.host + item.picture} className={styles.zttplistImg} />
-                :
-                ''
-              )
-            }.bind(this))
-          }
+            <div className="swiper-container">
+              <div className="swiper-wrapper">
+                {
+                  this.state.zttplist.map(function (item, index) {
+                    return (
+                    <div key={index} className="swiper-slide">
+                      <img key={item.id} src={Helper.host + item.picture} className={styles.zttplistImg} />
+                    </div>
+                    )
+                  }.bind(this))
+                }
+              </div>
+            </div>
           </div>
         </div>
       </Spin>
