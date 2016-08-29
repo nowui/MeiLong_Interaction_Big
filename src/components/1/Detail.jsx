@@ -16,6 +16,7 @@ class Detail extends Component {
     this.state = {
       isLoad: false,
       id: self.props.params.id,
+      sId: 0,
       page: 1,
       limit: 2,
       list: []
@@ -23,8 +24,10 @@ class Detail extends Component {
 
     this.props.socket.on('open', function (data) {
       if(data.user == 'small') {
+      console.log(data.data)
         self.setState({
           id: data.data.id,
+          sId: data.data.sId,
           page: data.data.page
         })
 
@@ -58,7 +61,7 @@ class Detail extends Component {
   }
 
   componentDidMount() {
-    self.load()
+
   }
 
   componentWillUnmount() {
@@ -73,7 +76,7 @@ class Detail extends Component {
     })
 
     Helper.ajax({
-      url: '/services/whytDjxmhPageContent/' + self.state.id + '-' + self.state.page + '-' + self.state.limit,
+      url: '/services/whytDjxmhPageContent/' + self.state.id + '-' + self.state.sId + '-' + self.state.page + '-' + self.state.limit,
       data: {
 
       },
