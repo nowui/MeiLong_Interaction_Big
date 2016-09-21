@@ -47,7 +47,12 @@ class Index extends Component {
           this.state.isPlay ?
           <Video loop muted
             ref="video"
-            style={{width: '100%'}}
+            style={{
+              height: '720px',
+              paddingLeft: '320px',
+              paddingRight: '320px',
+              backgroundColor: '#000000'
+            }}
             poster="http://sourceposter.jpg"
             onCanPlayThrough={() => {
 
