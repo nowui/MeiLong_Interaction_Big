@@ -15,15 +15,50 @@ class Detail extends Component {
 
     this.state = {
       isLoad: false,
+      id: '',
       object: {
         id: '',
         pagecontent: ''
-      }
+      },
+      page: 1,
+      limit: 1,
+      total: 0
     }
 
     this.props.socket.on('open', function (data) {
       if(data.user == 'small') {
-        self.load(data.data)
+        self.setState({
+          id: data.data,
+          page: 1
+        })
+
+        self.load()
+      }
+    })
+
+    this.props.socket.on('up', function (data) {
+      if(data.user == 'small') {
+        if(self.state.page > 1) {
+          self.setState({
+            page: self.state.page - 1
+          })
+
+          self.load()
+        }
+      }
+    })
+
+    this.props.socket.on('down', function (data) {
+      if(data.user == 'small') {
+        console.log(self.state.page)
+        console.log(self.state.total)
+        if(self.state.page < self.state.total) {
+          self.setState({
+            page: self.state.page + 1
+          })
+
+          self.load()
+        }
       }
     })
   }
@@ -34,21 +69,24 @@ class Detail extends Component {
 
   componentWillUnmount() {
     self.props.socket.removeAllListeners(['open'])
+    self.props.socket.removeAllListeners(['up'])
+    self.props.socket.removeAllListeners(['down'])
   }
 
-  load = function(id) {
+  load = function() {
     self.setState({
       isLoad: true
     })
 
     Helper.ajax({
-      url: '/services/whytXzgfhPageContent/' + id,
+      url: '/services/whytXzgfhPageContent/' + self.state.id + '-' + self.state.page + '-' + self.state.limit,
       data: {
 
       },
       success: function(data) {
         self.setState({
-          object: data
+          object: data.list[0],
+          total: data.totalPage
         })
       },
       complete: function() {
