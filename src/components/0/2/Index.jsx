@@ -15,8 +15,8 @@ class Detail extends Component {
     self = this
 
     this.state = {
-      id: -1,
-      index: -1
+      id: 0,
+      index: 0
     }
 
     this.props.socket.on('open', function (data) {
@@ -42,10 +42,7 @@ class Detail extends Component {
     return (
       <div className={styles.bg}>
         {
-          (this.state.id == 0 && this.state.index != 4 && this.state.index != 5 && this.state.index != 6 && this.state.index != 7 && this.state.index != 8) || (this.state.id == 1) ?
           <img src={require('../../../assets/image/map_' + this.state.id + '_' + this.state.index + '.png')} />
-          :
-          ''
         }
       </div>
     )
